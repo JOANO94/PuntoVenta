@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @ComponentScan("com.mx.proyecto") //Sirve para indicarle a Spring que es sobre
 //ese paquete va a buscar aquellas clases que nosotros hayamos afiliado/integrado a spring con las anotaciones
 
-public class WebConfig  extends WebMvcConfigurerAdapter{
+public class WebConfig extends WebMvcConfigurerAdapter{
 	
 	@Bean
 	public InternalResourceViewResolver resolver() {
@@ -23,6 +23,7 @@ public class WebConfig  extends WebMvcConfigurerAdapter{
 		return resol;
 	}
 	
+	@Override 
 	public void addResourceHandlers (ResourceHandlerRegistry registry) {
 		registry
 			.addResourceHandler("/resources/**")

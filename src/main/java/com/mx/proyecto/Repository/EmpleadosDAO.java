@@ -14,4 +14,10 @@ public interface EmpleadosDAO extends DAO<Empleados, Long> {
 	Empleados getEmpleadosByRFCActivo(String rfc);
 
 	Long obtValSecEmpleado();
+	
+	boolean validarNSS (String nss);
+
+	boolean validarRFC(String rfc);
+
+	boolean validarCURP(String curp);
 }

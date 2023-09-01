@@ -89,4 +89,43 @@ public class EmpleadosDAOImpl extends GenericDAO<Empleados, Long> implements Emp
 		return ((BigDecimal) result.get(0)).longValue();
 	}
 
+	@Override
+	public boolean validarCURP(String curp) {
+		String expRegCurp = "^[A-Z]{4}\\d{6}[HM]{1}(AS|BC|BS|CC|CH|CL|CM|CS|DF|DG|GR|GT|HG|JC|MC|MN|MS|NE|NL|NT|OC|PL|"
+				+ "QR|QT|SL|SP|SR|TC|TL|TS|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\\d]{1}\\d{1}$";
+
+		if (curp.matches(expRegCurp)) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean validarRFC(String rfc) {
+		String expRegRfc = "^(([A-ZÑ&]{4})([0-9]{2})([0][13578]|[1][02])(([0][1-9]|[12][\\d])|[3][01])([A-Z0-9]{3}))|"
+				+ "(([A-ZÑ&]{4})([0-9]{2})([0][13456789]|[1][012])(([0][1-9]|[12][\\d])|[3][0])([A-Z0-9]{3}))|"
+				+ "(([A-ZÑ&]{4})([02468][048]|[13579][26])[0][2]([0][1-9]|[12][\\d])([A-Z0-9]{3}))|"
+				+ "(([A-ZÑ&]{4})([0-9]{2})[0][2]([0][1-9]|[1][0-9]|[2][0-8])([A-Z0-9]{3}))$";
+
+		if (rfc.matches(expRegRfc)) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean validarNSS(String nss) {
+		String expRegNum = "^[0-9]{10}$";
+
+		if (nss.matches(expRegNum)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }

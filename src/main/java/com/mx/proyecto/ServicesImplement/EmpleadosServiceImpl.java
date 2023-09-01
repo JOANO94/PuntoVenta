@@ -20,9 +20,23 @@ public class EmpleadosServiceImpl implements EmpleadosService {
 	@Override
 	public ResponseDto insertEmpleado(EmpleadosDTO nuevoEmpleado) {
 		ResponseDto response = new ResponseDto();
+		String validaciones = "";
 
 		try {
+			boolean validarrfc = empleadosDAO.validarRFC(nuevoEmpleado.getRfc());
+			boolean validarcurp = empleadosDAO.validarCURP(nuevoEmpleado.getCurp());
+			boolean validarnss = empleadosDAO.validarNSS(nuevoEmpleado.getNss().toString());
 
+			if (!validarrfc) {
+				validaciones = validaciones + "¡EL RFC DEL EMPLEADO NO CUMPLE CON LA ESTRUCTURA ADECUADA! ";
+			}
+			if (!validarcurp) {
+				validaciones = validaciones + "¡LA CURP DEL EMPLEADO NO CUMPLE CON LA ESTRUCTURA ADECUADA! ";
+			}
+			if (!validarnss) {
+				validaciones = validaciones + "¡EL NSS DEL EMPLEADO NO CUMPLE CON LA ESTRUCTURA ADECUADA, NUMÉRICO A 10 POSICIONES!";
+			}
+			if (validaciones.equals("")) {
 				Empleados empleadoDatos = empleadosDAO.getEmpleadosByRFC(nuevoEmpleado.getRfc());
 
 				if (empleadoDatos == null) {
@@ -42,11 +56,15 @@ public class EmpleadosServiceImpl implements EmpleadosService {
 					empleadosDAO.create(datosNuevoEmpleado);
 					response.setCode(200);
 					response.setMessage("¡SE INSERTÓ UN NUEVO REGISTRO DE EMPLEADO!");
-
 				} else {
 					response.setCode(500);
 					response.setMessage("¡EL EMPLEADO YA EXISTE EN LA BASE DE DATOS!");
 				}
+
+			} else {
+				response.setCode(500);
+				response.setMessage(validaciones);
+			}
 		} catch (Exception e) {
 			response.setCode(500);
 			response.setMessage("OCURRIÓ UN ERROR EN LA CLASE EmpleadosServiceImpl EN EL MÉTODO insertEmpleado");
